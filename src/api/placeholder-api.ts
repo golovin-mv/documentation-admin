@@ -14,15 +14,23 @@ type TestTemplateRequest = {
   context: [{key: string, value: unknown}]
 }
 
+const getTemplateAccessUrl = () => {
+  return JSON.parse(localStorage.getItem('setting')).state.templateAccessUrl
+}
+
+const getDocumentGeneratorUrl = () => {
+  return JSON.parse(localStorage.getItem('setting')).state.documentGeneratorUrl
+}
+
 export const getAllPlaceholders = async (): Promise<Placeholder[]> => {
-  const {data} = await fetch('http://localhost:8010/api/v1/placeholder/placeholders?offset=0')
+  const {data} = await fetch(`${getTemplateAccessUrl()}/api/v1/placeholder/placeholders?offset=0`)
     .then(res => res.json())
 
   return data
 }
 
 export const testTemplate = async ({id, template, placeholders, context}: TestTemplateRequest) => {
-  const res = await fetch(`http://localhost:8011/api/v1/document/test`, {
+  const res = await fetch(`${getDocumentGeneratorUrl()}/api/v1/document/test`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

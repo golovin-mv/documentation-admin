@@ -7,7 +7,7 @@ import {Input} from "@/components/ui/input.tsx";
 import Preview from "@/components/editor/preview.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {ScrollArea} from "@/components/ui/scroll-area.tsx";
-import {RefreshCw} from "lucide-react";
+import {ListRestartIcon} from "lucide-react";
 
 const Result: React.FC = () => {
   const {code, idForTest, setIdForTest, } = useHtmlStore();
@@ -45,7 +45,7 @@ const Result: React.FC = () => {
           size="icon"
           disabled={isLoading}
         >
-          <RefreshCw />
+          <ListRestartIcon />
         </Button>
       </div>
       {isLoading && <div>Loading...</div>}

@@ -1,3 +1,6 @@
+html, body, #root {
+    height: 100% ;
+}
 @tailwind base;
   @tailwind components;
   @tailwind utilities;
@@ -33,6 +36,9 @@
       --ring: 224 71.4% 4.1%;
 
       --radius: 0.5rem;
+
+      --selected: rgb(14 116 144);
+      --selected-color: rgb(255 255 255)
     }
 
     .dark {
@@ -63,6 +69,9 @@
       --border: 215 27.9% 16.9%;
       --input: 215 27.9% 16.9%;
       --ring: 216 12.2% 83.9%;
+
+      --selected: rgb(153 27 27);
+      --selected-color: var(--muted-foreground);
     }
   }
 
@@ -75,9 +84,9 @@
     }
   }
 .monaco-editor-background {
-  background-color: hsl(224, 71.4%, 4.1%) !important;
+  background-color: hsl(var(--background)) !important;
 }
 
 .monaco-editor .margin {
-  background-color: hsl(224, 71.4%, 4.1%) !important;
+  background-color: hsl(var(--background)) !important;
 }

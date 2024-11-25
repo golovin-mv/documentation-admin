@@ -1,24 +1,30 @@
-import Context from "@/features/context.tsx";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import HtmlEditor from "@/features/editor.tsx";
 import {ThemeProvider} from "@/components/theme-provider.tsx";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Settings from "@/features/settings.tsx";
+import HtmlEditor from "@/features/editor.tsx";
+import Context from "@/features/context.tsx";
+import Templates from "@/features/templates.tsx";
+import CreateTemplate from "@/features/create-template.tsx";
+import React from "react";
+import TopNavigation from "@/components/top-menu.tsx";
 
 const queryClient = new QueryClient()
+
 function App() {
+
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-    <QueryClientProvider client={queryClient}>
-      <div className="flex flex-row overflow-hidden h-screen ">
-        <div className="w-3/4">
-          <HtmlEditor/>
-        </div>
-        <div style={{
-          backgroundColor: 'hsl(var(--secondary))'
-        }} className="w-1/4 h-full overflow-hidden border-solid px-2 ">
-          <Context/>
-        </div>
-      </div>
-    </QueryClientProvider>
+    <ThemeProvider storageKey="vite-ui-theme">
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <TopNavigation />
+          <Routes>
+            <Route path="settings" element={<Settings/>}/>
+            <Route path="templates" element={<Templates />}/>
+            <Route path="*" element={<CreateTemplate />} />
+          </Routes>
+        </BrowserRouter>
+      </QueryClientProvider>
     </ThemeProvider>
   )
 }

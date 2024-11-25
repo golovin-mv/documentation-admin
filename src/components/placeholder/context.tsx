@@ -3,9 +3,11 @@ import React from "react";
 import ReactJson from "react-json-view";
 import {Checkbox} from "@/components/ui/checkbox.tsx";
 import {Button} from "@/components/ui/button.tsx";
+import useSettingStore from "@/stores/setting-store.ts";
 
 const ContextEditor: React.FC = () => {
   const {setContext, parsedContext, enableContext, setEnableContext} = usePlaceholdersStore();
+  const {jsonEditorTheme } = useSettingStore();
 
   return (
     <div className="w-full px-2">
@@ -27,11 +29,11 @@ const ContextEditor: React.FC = () => {
             <>
                 <ReactJson
                     style={{
-                      backgroundColor: '--background',
+                      backgroundColor: 'var(--background)',
                     }}
                     className="w-full h-full"
                     iconStyle="square"
-                    theme="tomorrow"
+                    theme={jsonEditorTheme}
                     src={JSON.parse(parsedContext)}
                     onEdit={({updated_src}) => {
                       setContext(JSON.stringify(updated_src))

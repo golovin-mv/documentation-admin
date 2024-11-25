@@ -5,6 +5,8 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx
 import Preview from "@/components/editor/preview.tsx";
 import usePlaceholdersStore from "@/stores/placeholders-store.ts";
 import Result from "@/components/editor/result.tsx";
+import {emmetHTML} from "emmet-monaco-es";
+import useSettingStore from "@/stores/setting-store.ts";
 
 const HtmlEditor: React.FC = () => {
   const insertContent = (editor, content) => {
@@ -22,6 +24,8 @@ const HtmlEditor: React.FC = () => {
   };
 
   const {code, setCode} = useHtmlStore();
+  const {htmlEditorTheme} = useSettingStore();
+
   const {
     placeholderForInsert,
     clearInsertPlaceholder
@@ -37,12 +41,16 @@ const HtmlEditor: React.FC = () => {
   }, [placeholderForInsert]);
 
   return (
-    <Tabs defaultValue="editor" className="overflow-hidden h-full flex flex-col items-center">
+    <Tabs defaultValue="template" className="overflow-hidden h-full flex flex-col items-center">
       <TabsList className="mt-2">
+        <TabsTrigger value="template">Template</TabsTrigger>
         <TabsTrigger value="editor">Editor</TabsTrigger>
         <TabsTrigger value="preview">Preview</TabsTrigger>
         <TabsTrigger value="result">Test</TabsTrigger>
       </TabsList>
+      <TabsContent value="template" className="h-full w-full">
+        {'template'}
+      </TabsContent>
       <TabsContent value="editor" className="h-full w-full">
         <div className="h-full w-full">
           <Editor
@@ -50,11 +58,11 @@ const HtmlEditor: React.FC = () => {
               backgroundColor: '--background'
             }}
             height="calc(100vh - 64px)"
-            defaultLanguage="html"
+            defaultLanguage="php"
             defaultValue={code}
             onChange={setCode}
-            language="html"
-            theme={"vs-dark"}
+            language="php"
+            theme={htmlEditorTheme}
             options={{
               minimap: {
                 enabled: false
@@ -66,10 +74,14 @@ const HtmlEditor: React.FC = () => {
             }}
             onMount={(editor, monaco) => {
               editorRef.current = editor;
+              emmetHTML(
+                monaco,
+                ['html', 'php'],
+              )
 
               editor.onKeyDown((event) => {
                 // select enabled languages
-                const enabledLanguages = ["html", "markdown", "javascript", "typescript"]; // enable js & ts for jsx & tsx
+                const enabledLanguages = ["html", "markdown", "javascript", "typescript", "php"]; // enable js & ts for jsx & tsx
 
                 const model = editor.getModel();
                 if (!enabledLanguages.includes(model.getLanguageId())) {

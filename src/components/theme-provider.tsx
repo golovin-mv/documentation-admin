@@ -71,3 +71,6 @@ export const useTheme = () => {
 
   return context
 }
+
+export {ThemeProviderContext};
+export type {Theme}
