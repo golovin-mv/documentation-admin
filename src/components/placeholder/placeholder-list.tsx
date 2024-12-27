@@ -1,16 +1,18 @@
-import {getAllPlaceholders, Placeholder as PlaceholderType} from "@/api/placeholder-api.ts";
-import React, {useState} from "react";
-import {useQuery} from "@tanstack/react-query";
+import { getAllPlaceholders, Placeholder as PlaceholderType } from "@/api/placeholder-api.ts";
+import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Placeholder from "@/components/placeholder/placeholder.tsx";
 import usePlaceholdersStore from "@/stores/placeholders-store.ts";
-import {ScrollArea} from "@/components/ui/scroll-area.tsx";
-import {Input} from "@/components/ui/input.tsx";
-import {copyTextToClipboard, search} from "@/lib/utils.ts";
-import {Button} from "@/components/ui/button.tsx";
-import {CopyIcon} from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area.tsx";
+import { Input } from "@/components/ui/input.tsx";
+import { copyTextToClipboard, search } from "@/lib/utils.ts";
+import { Button } from "@/components/ui/button.tsx";
+import { BanIcon, CopyIcon, ListChecksIcon, MenuIcon } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, } from "@/components/ui/dropdown-menu"
+import { Separator } from "../ui/separator";
 
 const PlaceholderList: React.FC = () => {
-  const {data: placeholders, isLoading, isError} = useQuery({
+  const { data: placeholders, isLoading, isError } = useQuery({
     queryKey: ['placeholders'],
     queryFn: getAllPlaceholders,
   });
@@ -27,32 +29,42 @@ const PlaceholderList: React.FC = () => {
 
   const selectedPlaceholderHrids = selectedPlaceholders.map(placeholder => placeholder.hrid)
 
-  const filterPlaceholders = (placeholders: PlaceholderType[]) => {
+  const filterPlaceholders = (placeholders: PlaceholderType[]): PlaceholderType[] => {
     if (!filter) {
       return placeholders
     }
 
     if (filter.includes(':selected')) {
       const [_, ...arr] = filter.split(' ');
-      return (arr && arr.length > 0)
+      const result = (arr && arr.length > 0)
         ? search(
           placeholders?.filter(placeholder => selectedPlaceholderHrids.includes(placeholder.hrid)) || [],
           ['hrid', 'description'],
           arr.join('')
         )
         : placeholders?.filter(placeholder => selectedPlaceholderHrids.includes(placeholder.hrid))
+
+      return result as PlaceholderType[]
     }
 
-    return search(placeholders, ['hrid', 'description'], filter);
+    return search(placeholders, ['hrid', 'description'], filter) as PlaceholderType[];
   }
 
   const handleCopyClick = () => {
     setOnCopy(true);
-    const placeholdersString = filterPlaceholders(placeholders)
+    const placeholdersString = filterPlaceholders(placeholders ?? [])
       ?.map(el => el.hrid).join(",\n")
 
     copyTextToClipboard(placeholdersString)
       .finally(() => setOnCopy(false));
+  }
+
+  const handleSelectClick = (selected: boolean) => {
+    filterPlaceholders(placeholders ?? [])?.forEach((placeholder: PlaceholderType) => {
+      selected
+        ? selectPlaceholder(placeholder)
+        : deselectPlaceholder(placeholder)
+    });
   }
 
   return (
@@ -65,15 +77,28 @@ const PlaceholderList: React.FC = () => {
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
         />
-        <Button
-          className="mt-1"
-          onClick={() => handleCopyClick()}
-          variant="outline"
-          size="icon"
-          disabled={onCopy}
-        >
-          <CopyIcon/>
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button variant="ghost" size="icon" className="max-w-8 min-w-10">
+              <MenuIcon />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem onClick={() => handleCopyClick()}>
+              <CopyIcon className="pr-2" />
+              Copy
+            </DropdownMenuItem>
+            <Separator />
+            <DropdownMenuItem onClick={() => handleSelectClick(true)}>
+              <ListChecksIcon className="pr-2" />
+              Select All
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleSelectClick(false)}>
+              <BanIcon className="pr-2" />
+              Deselect All
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       <ScrollArea className="flex flex-col max-h-[90vh] p-3">
         {isLoading && <div>Loading...</div>}

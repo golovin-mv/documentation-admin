@@ -6,7 +6,7 @@ import {useTheme} from "@/components/theme-provider.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {EditIcon} from "lucide-react";
 
-interface TemplateListProps extends HTMLAttributes {
+interface TemplateListProps extends HTMLAttributes<HTMLUListElement> {
   templates: TemplateListItem[]
 }
 
@@ -22,7 +22,7 @@ const TemplateList: React.FC<TemplateListProps> =
                 <span>{template.hrid}</span>
                 <Tag
                   style={{
-                    backgroundColor: randomColor({seed: 'version', luminosity: theme}),
+                    backgroundColor: randomColor({seed: 'version', luminosity: theme === 'system' ? 'dark' : theme}),
                   }}
                 >v{template.version}</Tag>
               </div>
@@ -30,14 +30,14 @@ const TemplateList: React.FC<TemplateListProps> =
                 <span className="text-sm text-muted-foreground group-hover:text-[--selected-color]">{template.description}</span>
                 <Tag
                   style={{
-                    backgroundColor: randomColor({seed: template.contentType.name, luminosity: theme}),
+                    backgroundColor: randomColor({seed: template.contentType.name, luminosity: theme === 'system' ? 'dark' : theme}),
                   }}
                 >{template.contentType.name}</Tag>
                 <span className="text-xs text-muted-foreground">From: {new Date(template.startDate).toLocaleDateString()}</span>
                 <span className="text-xs text-muted-foreground ml-2">To: {new Date(template.endDate).toLocaleDateString()}</span>
               </div>
             </div>
-            <Button variant="ghost h-full">
+            <Button variant="ghost" className="h-full">
               <EditIcon className="group-hover:text-[--selected-color] group-hover:inline-flex hidden"/>
             </Button>
           </li>

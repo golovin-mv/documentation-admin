@@ -15,11 +15,21 @@ type TestTemplateRequest = {
 }
 
 const getTemplateAccessUrl = () => {
-  return JSON.parse(localStorage.getItem('setting')).state.templateAccessUrl
+  const url = localStorage.getItem('setting');
+  if (url === null) {
+    return ''
+  }
+
+  return JSON.parse(url).state.templateAccessUrl
 }
 
 const getDocumentGeneratorUrl = () => {
-  return JSON.parse(localStorage.getItem('setting')).state.documentGeneratorUrl
+  const url = localStorage.getItem('setting');
+  if (url === null) {
+    return ''
+  }
+
+  return JSON.parse(url).state.documentGeneratorUrl
 }
 
 export const getAllPlaceholders = async (): Promise<Placeholder[]> => {

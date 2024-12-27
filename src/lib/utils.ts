@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function search(objects: object[], keys: string[], pattern ) {
+export function search(objects: object[], keys: string[], pattern: string ) {
   const fuseOptions = {
     distance: 50,
     ignoreLocation: true,
@@ -36,7 +36,7 @@ export const pathToPlaceholder = (placeholder: Placeholder) => {
   return `{{$${paths[0]}${arrayPath}}}`;
 }
 
-export async function copyTextToClipboard(text) {
+export async function copyTextToClipboard(text: string) {
   if ('clipboard' in navigator) {
     return await navigator.clipboard.writeText(text);
   } else {

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, {useEffect, useRef} from "react";
 import useHtmlStore from "@/stores/html-store.ts";
 import {Editor} from "@monaco-editor/react";
@@ -9,7 +10,7 @@ import {emmetHTML} from "emmet-monaco-es";
 import useSettingStore from "@/stores/setting-store.ts";
 
 const HtmlEditor: React.FC = () => {
-  const insertContent = (editor, content) => {
+  const insertContent = (editor: typeof Editor, content: string) => {
     if (!editor) {
       return;
     }

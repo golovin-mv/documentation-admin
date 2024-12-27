@@ -13,21 +13,14 @@ type TemplateListItem = {
   endDate: Date
 }
 
-type CreteTemplateRequest = {
-  hrid: string,
-  startDate: string,
-  endDate: string,
-  priority: number,
-  content: string,
-  htmlContent: string,
-  description: string,
-  contentTypeId: 1,
-  placeholdersHrid: string[]
-  conditionId?: 1
-}
 
 const getTemplateAccessUrl = () => {
-  return JSON.parse(localStorage.getItem('setting')).state.templateAccessUrl
+  const settings = localStorage.getItem('setting');
+  if (settings === null) {
+    return ''
+  }
+  
+  return JSON.parse(settings).state.templateAccessUrl
 }
 
 export  const templateList = async (): Promise<TemplateListItem[]> => {
@@ -36,3 +29,5 @@ export  const templateList = async (): Promise<TemplateListItem[]> => {
 
   return data;
 }
+
+export type {TemplateListItem}

@@ -2,11 +2,8 @@ import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ThemeProvider} from "@/components/theme-provider.tsx";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Settings from "@/features/settings.tsx";
-import HtmlEditor from "@/features/editor.tsx";
-import Context from "@/features/context.tsx";
 import Templates from "@/features/templates.tsx";
 import CreateTemplate from "@/features/create-template.tsx";
-import React from "react";
 import TopNavigation from "@/components/top-menu.tsx";
 
 const queryClient = new QueryClient()

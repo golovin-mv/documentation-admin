@@ -31,7 +31,6 @@ const ContextEditor: React.FC = () => {
                     style={{
                       backgroundColor: 'var(--background)',
                     }}
-                    className="w-full h-full"
                     iconStyle="square"
                     theme={jsonEditorTheme}
                     src={JSON.parse(parsedContext)}
@@ -44,7 +43,7 @@ const ContextEditor: React.FC = () => {
                     onDelete={({updated_src}) => {
                       setContext(JSON.stringify(updated_src))
                     }}
-                    enableClipboard:false
+                    enableClipboard={false}
                 />
                 <Button
                     className="w-full mt-4"
