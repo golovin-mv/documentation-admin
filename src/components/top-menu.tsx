@@ -7,12 +7,12 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle
 } from "@/components/ui/navigation-menu.tsx";
-import {Link} from "react-router-dom";
-import {FilePlus2, ListOrderedIcon, SettingsIcon} from "lucide-react";
+import { Link } from "react-router-dom";
+import { FilePlus2, ListOrderedIcon, SettingsIcon } from "lucide-react";
 import React from "react";
 
 const TopNavigation: React.FC = () => (
-  <NavigationMenu className="ml-2">
+  <NavigationMenu>
     <NavigationMenuList>
       <NavigationMenuItem>
         <NavigationMenuTrigger>Templates</NavigationMenuTrigger>
@@ -22,13 +22,13 @@ const TopNavigation: React.FC = () => (
               <li>
                 <Link to="/templates">
                   <NavigationMenuLink className={navigationMenuTriggerStyle()} >
-                    <ListOrderedIcon className="w-5 h-5 mr-2"/>
+                    <ListOrderedIcon className="w-5 h-5 mr-2" />
                     List
                   </NavigationMenuLink>
                 </Link>
                 <Link to="/create-template">
                   <NavigationMenuLink className={navigationMenuTriggerStyle()} >
-                    <FilePlus2 className="w-5 h-5 mr-2"/>
+                    <FilePlus2 className="w-5 h-5 mr-2" />
                     New
                   </NavigationMenuLink>
                 </Link>
@@ -40,7 +40,7 @@ const TopNavigation: React.FC = () => (
       <NavigationMenuItem>
         <Link to="/settings">
           <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-            <SettingsIcon className="w-5 h-5 mr-2"/>
+            <SettingsIcon className="w-5 h-5 mr-2" />
             Settings
           </NavigationMenuLink>
         </Link>

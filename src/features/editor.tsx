@@ -1,12 +1,10 @@
-//@ts-nocheck
-import React, {useEffect, useRef} from "react";
-import useHtmlStore from "@/stores/html-store.ts";
-import {Editor} from "@monaco-editor/react";
-import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
+import React, { useEffect, useRef } from "react";
+import { Editor } from "@monaco-editor/react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.tsx";
 import Preview from "@/components/editor/preview.tsx";
 import usePlaceholdersStore from "@/stores/placeholders-store.ts";
 import Result from "@/components/editor/result.tsx";
-import {emmetHTML} from "emmet-monaco-es";
+import { emmetHTML } from "emmet-monaco-es";
 import useSettingStore from "@/stores/setting-store.ts";
 
 const HtmlEditor: React.FC = () => {
@@ -24,8 +22,8 @@ const HtmlEditor: React.FC = () => {
     editor.executeEdits("my-source", [op]);
   };
 
-  const {code, setCode} = useHtmlStore();
-  const {htmlEditorTheme} = useSettingStore();
+  const { code, setCode } = useHtmlStore();
+  const { htmlEditorTheme } = useSettingStore();
 
   const {
     placeholderForInsert,
@@ -180,7 +178,7 @@ const HtmlEditor: React.FC = () => {
         </div>
       </TabsContent>
       <TabsContent value="preview">
-        <Preview code={code}/>
+        <Preview code={code} />
       </TabsContent >
       <TabsContent value="result" className="h-full w-full">
         <Result />

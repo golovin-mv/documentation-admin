@@ -1,6 +1,5 @@
-//@ts-nocheck
-import {create} from "zustand";
-import {persist} from "zustand/middleware";
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface HtmlStore {
   code: string,
@@ -13,11 +12,11 @@ const useHtmlStore = create<HtmlStore>(
   persist(
     set => ({
       code: '',
-      setCode: (code: string) => set({code}),
+      setCode: (code: string) => set({ code }),
       idForTest: '',
-      setIdForTest: (id: string) => set({idForTest: id})
+      setIdForTest: (id: string) => set({ idForTest: id })
     }),
-    {name: 'html'}
+    { name: 'html' }
   )
 )
 export default useHtmlStore
