@@ -1,33 +1,30 @@
-type TemplateListItem = {
-  id: number,
-  hrid: string,
-  version: number,
-  priority: number,
-  description: string,
-  contentType: {
-    id: number,
-    hrid: string,
-    name: string
-  },
-  startDate: Date,
-  endDate: Date
-}
-
+import { ApiResponse } from './types/common';
+import { TemplateListItem, ApiTemplate } from './types/template';
 
 const getTemplateAccessUrl = () => {
   const settings = localStorage.getItem('setting');
   if (settings === null) {
     return ''
   }
-  
+
   return JSON.parse(settings).state.templateAccessUrl
 }
 
-export  const templateList = async (): Promise<TemplateListItem[]> => {
-  const {data} = await fetch(`${getTemplateAccessUrl()}/api/v1/template/templates`)
-    .then(res => res.json())
-
+export const templateList = async (): Promise<TemplateListItem[]> => {
+  const response = await fetch(`${getTemplateAccessUrl()}/api/v1/template/templates`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch templates: ${response.statusText}`);
+  }
+  const { data } = await response.json();
   return data;
 }
 
-export type {TemplateListItem}
+export const getTemplate = async (id: number): Promise<ApiResponse<ApiTemplate>> => {
+  const response = await fetch(`${getTemplateAccessUrl()}/api/v1/template/templates/${id}`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch template: ${response.statusText}`);
+  }
+  return response.json();
+}
+
+export type { TemplateListItem }

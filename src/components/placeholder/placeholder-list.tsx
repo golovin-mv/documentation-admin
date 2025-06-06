@@ -25,8 +25,6 @@ const PlaceholderList: React.FC = () => {
     insertPlaceholder
   } = usePlaceholdersStore();
 
-  const [onCopy, setOnCopy] = useState<boolean>(false);
-
   const selectedPlaceholderHrids = selectedPlaceholders.map(placeholder => placeholder.hrid)
 
   const filterPlaceholders = (placeholders: PlaceholderType[]): PlaceholderType[] => {
@@ -35,7 +33,7 @@ const PlaceholderList: React.FC = () => {
     }
 
     if (filter.includes(':selected')) {
-      const [_, ...arr] = filter.split(' ');
+      const [, ...arr] = filter.split(' ');
       const result = (arr && arr.length > 0)
         ? search(
           placeholders?.filter(placeholder => selectedPlaceholderHrids.includes(placeholder.hrid)) || [],
@@ -51,12 +49,10 @@ const PlaceholderList: React.FC = () => {
   }
 
   const handleCopyClick = () => {
-    setOnCopy(true);
     const placeholdersString = filterPlaceholders(placeholders ?? [])
       ?.map(el => el.hrid).join(",\n")
 
-    copyTextToClipboard(placeholdersString)
-      .finally(() => setOnCopy(false));
+    copyTextToClipboard(placeholdersString);
   }
 
   const handleSelectClick = (selected: boolean) => {

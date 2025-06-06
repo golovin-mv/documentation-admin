@@ -6,6 +6,7 @@ import usePlaceholdersStore from "@/stores/placeholders-store.ts";
 import Result from "@/components/editor/result.tsx";
 import { emmetHTML } from "emmet-monaco-es";
 import useSettingStore from "@/stores/setting-store.ts";
+import useHtmlStore from '@/stores/html-store.ts';
 
 const HtmlEditor: React.FC = () => {
   const insertContent = (editor: typeof Editor, content: string) => {
