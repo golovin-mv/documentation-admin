@@ -1,13 +1,13 @@
-import {type ClassValue, clsx} from "clsx"
-import {twMerge} from "tailwind-merge"
+import { type ClassValue, clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
 import Fuse from "fuse.js";
-import {Placeholder} from "@/api/placeholder-api.ts";
+import { Placeholder } from "@/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function search(objects: object[], keys: string[], pattern: string ) {
+export function search(objects: object[], keys: string[], pattern: string) {
   const fuseOptions = {
     distance: 50,
     ignoreLocation: true,

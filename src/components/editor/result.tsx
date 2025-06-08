@@ -1,32 +1,37 @@
 import React from "react";
-import {useQuery} from "@tanstack/react-query";
-import {testTemplate} from "@/api/placeholder-api.ts";
+import { useQuery } from "@tanstack/react-query";
+import { testTemplate } from "@/api/placeholder-api.ts";
 import useHtmlStore from "@/stores/html-store.ts";
 import usePlaceholdersStore from "@/stores/placeholders-store.ts";
-import {Input} from "@/components/ui/input.tsx";
+import { Input } from "@/components/ui/input.tsx";
 import Preview from "@/components/editor/preview.tsx";
-import {Button} from "@/components/ui/button.tsx";
-import {ScrollArea} from "@/components/ui/scroll-area.tsx";
-import {ListRestartIcon} from "lucide-react";
+import { Button } from "@/components/ui/button.tsx";
+import { ScrollArea } from "@/components/ui/scroll-area.tsx";
+import { ListRestartIcon } from "lucide-react";
+import Spinner from "../ui/spinner";
 
 const Result: React.FC = () => {
-  const {code, idForTest, setIdForTest, } = useHtmlStore();
+  const { code, idForTest, setIdForTest, } = useHtmlStore();
   const selectedPlaceholders = usePlaceholdersStore(
-    ({selectedPlaceholders}) => selectedPlaceholders.map(el => el.path)
+    ({ selectedPlaceholders }) => selectedPlaceholders.map(el => el.path)
   )
 
-  const {parsedContext} = usePlaceholdersStore(
-    ({parsedContext, enableContext}) => ({
+  const { parsedContext } = usePlaceholdersStore(
+    ({ parsedContext, enableContext }) => ({
       parsedContext: enableContext ? parsedContext : '{}',
     })
   );
 
-  const {data, isLoading, isError, error, refetch} = useQuery({
+  const { data, isLoading, isError, error, refetch } = useQuery({
     queryKey: ['result', idForTest, code.length, parsedContext],
-    queryFn: () => testTemplate({id: idForTest, template: code, placeholders: selectedPlaceholders, context: JSON.parse(parsedContext)}),
+    queryFn: () => testTemplate({ id: idForTest, template: code, placeholders: selectedPlaceholders, context: JSON.parse(parsedContext) }),
     enabled: false,
     retry: false
   });
+
+  if (isLoading) {
+    return <Spinner>Loading</Spinner>;
+  }
 
   return (
     <>
@@ -48,11 +53,10 @@ const Result: React.FC = () => {
           <ListRestartIcon />
         </Button>
       </div>
-      {isLoading && <div>Loading...</div>}
       {data &&
-          <ScrollArea className="mt-2">
-            <Preview code={data.template} />
-          </ScrollArea>
+        <ScrollArea className="mt-2">
+          <Preview code={data.template} />
+        </ScrollArea>
       }
       {(!data && isError) && <div>Error: {error.message}</div>}
     </>

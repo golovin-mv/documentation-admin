@@ -6,12 +6,12 @@ const CreateTemplate: React.FC = () => {
   return (
     <div className="flex flex-row overflow-hidden h-screen ">
       <div className="w-3/4">
-        <HtmlEditor/>
+        <HtmlEditor onSave={() => { }} />
       </div>
       <div style={{
         backgroundColor: 'hsl(var(--secondary))'
       }} className="w-1/4 h-full overflow-hidden border-solid px-2 ">
-        <Context/>
+        <Context />
       </div>
     </div>
   )

@@ -1,13 +1,13 @@
 import usePlaceholdersStore from "@/stores/placeholders-store.ts";
 import React from "react";
-import ReactJson from "react-json-view";
-import {Checkbox} from "@/components/ui/checkbox.tsx";
-import {Button} from "@/components/ui/button.tsx";
+import ReactJsonView from '@microlink/react-json-view';
+import { Checkbox } from "@/components/ui/checkbox.tsx";
+import { Button } from "@/components/ui/button.tsx";
 import useSettingStore from "@/stores/setting-store.ts";
 
 const ContextEditor: React.FC = () => {
-  const {setContext, parsedContext, enableContext, setEnableContext} = usePlaceholdersStore();
-  const {jsonEditorTheme } = useSettingStore();
+  const { setContext, parsedContext, enableContext, setEnableContext } = usePlaceholdersStore();
+  const { jsonEditorTheme } = useSettingStore();
 
   return (
     <div className="w-full px-2">
@@ -26,31 +26,31 @@ const ContextEditor: React.FC = () => {
       </div>
       <div>
         {enableContext &&
-            <>
-                <ReactJson
-                    style={{
-                      backgroundColor: 'var(--background)',
-                    }}
-                    iconStyle="square"
-                    theme={jsonEditorTheme}
-                    src={JSON.parse(parsedContext)}
-                    onEdit={({updated_src}) => {
-                      setContext(JSON.stringify(updated_src))
-                    }}
-                    onAdd={({updated_src}) => {
-                      setContext(JSON.stringify(updated_src))
-                    }}
-                    onDelete={({updated_src}) => {
-                      setContext(JSON.stringify(updated_src))
-                    }}
-                    enableClipboard={false}
-                />
-                <Button
-                    className="w-full mt-4"
-                    variant="destructive"
-                    onClick={() => setContext('{}')}
-                >Clear context</Button>
-            </>
+          <>
+            <ReactJsonView
+              style={{
+                backgroundColor: 'var(--background)',
+              }}
+              iconStyle="square"
+              theme={jsonEditorTheme}
+              src={JSON.parse(parsedContext)}
+              onEdit={({ updated_src }) => {
+                setContext(JSON.stringify(updated_src))
+              }}
+              onAdd={({ updated_src }) => {
+                setContext(JSON.stringify(updated_src))
+              }}
+              onDelete={({ updated_src }) => {
+                setContext(JSON.stringify(updated_src))
+              }}
+              enableClipboard={false}
+            />
+            <Button
+              className="w-full mt-4"
+              variant="destructive"
+              onClick={() => setContext('{}')}
+            >Clear context</Button>
+          </>
         }
       </div>
     </div>

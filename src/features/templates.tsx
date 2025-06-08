@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { templateList, TemplateListItem } from "@/api/templates-api.ts";
 import TemplateList from "@/components/template/template-list.tsx";
 import { useNavigate } from "react-router-dom";
+import Spinner from "@/components/ui/spinner";
 
 const Templates: React.FC = () => {
   const navigate = useNavigate();
@@ -19,21 +20,16 @@ const Templates: React.FC = () => {
   })
 
   return (
-    <>
-      {isLoading && <div>Loading...</div>}
+    <div className="w-4xl mt-4 m-auto">
+      {isLoading && <div className="size-full"><Spinner>Loading</Spinner></div>}
       {templates &&
-        <section
-          className="w-full flex flex-col items-center"
-        >
-          <TemplateList
-            className="w-3/4 mt-4"
-            templates={templates}
-            onEdit={(template: TemplateListItem) => navigate(`/edit/${template.id}`)}
-          />
-        </section>
+        <TemplateList
+          templates={templates}
+          onEdit={(template: TemplateListItem) => navigate(`/edit/${template.id}`)}
+        />
       }
       {isError && <div>Error: {(error as Error).message}</div>}
-    </>
+    </div>
   )
 }
 

@@ -7,8 +7,16 @@ import Result from "@/components/editor/result.tsx";
 import { emmetHTML } from "emmet-monaco-es";
 import useSettingStore from "@/stores/setting-store.ts";
 import useHtmlStore from '@/stores/html-store.ts';
+import { TemplateForm } from "@/components/template/template-form";
+import { Template } from "@/types/template";
+import VisualEditor from "@/components/editor/visual-editor";
 
-const HtmlEditor: React.FC = () => {
+interface HtmlEditorProps {
+  template?: Template | null;
+  onSave?: (template: Partial<Template>) => void;
+}
+
+const HtmlEditor: React.FC<HtmlEditorProps> = ({ template, onSave }) => {
   const insertContent = (editor: typeof Editor, content: string) => {
     if (!editor) {
       return;
@@ -40,16 +48,46 @@ const HtmlEditor: React.FC = () => {
     }
   }, [placeholderForInsert]);
 
+  useEffect(() => {
+    if (template?.content) {
+      setCode(template.content);
+    }
+  }, [template]);
+
+  const handleTemplateSave = (formData: Partial<Template>) => {
+    if (onSave) {
+      onSave({
+        ...formData,
+        content: code
+      });
+    }
+  };
+
   return (
     <Tabs defaultValue="template" className="overflow-hidden h-full flex flex-col items-center">
       <TabsList className="mt-2">
         <TabsTrigger value="template">Template</TabsTrigger>
-        <TabsTrigger value="editor">Editor</TabsTrigger>
-        <TabsTrigger value="preview">Preview</TabsTrigger>
-        <TabsTrigger value="result">Test</TabsTrigger>
+        <TabsTrigger value="visual">Visual Editor</TabsTrigger>
+        <TabsTrigger value="editor">Code Editor</TabsTrigger>
+        <TabsTrigger value="preview">Raw Preview</TabsTrigger>
+        <TabsTrigger value="result">Generate</TabsTrigger>
       </TabsList>
-      <TabsContent value="template" className="h-full w-full">
-        {'template'}
+      <TabsContent value="template" className="h-full w-full px-6">
+        <TemplateForm
+          hrid={template?.hrid ?? ''}
+          name={template?.name ?? ''}
+          startDate={template?.startDate?.toISOString().split('T')[0] ?? ''}
+          endDate={template?.endDate?.toISOString().split('T')[0] ?? ''}
+          priority={template?.priority ?? 0}
+          description={template?.description ?? ''}
+          onSave={handleTemplateSave}
+        />
+      </TabsContent>
+      <TabsContent value="visual" className="h-full w-full px-6">
+        <VisualEditor
+          content={template?.htmlContent ?? ''}
+          onChange={() => { }}
+        />
       </TabsContent>
       <TabsContent value="editor" className="h-full w-full">
         <div className="h-full w-full">
@@ -180,7 +218,7 @@ const HtmlEditor: React.FC = () => {
       </TabsContent>
       <TabsContent value="preview">
         <Preview code={code} />
-      </TabsContent >
+      </TabsContent>
       <TabsContent value="result" className="h-full w-full">
         <Result />
       </TabsContent>

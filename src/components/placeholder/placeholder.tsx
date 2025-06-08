@@ -34,7 +34,7 @@ const Placeholder: React.FC<PlaceholderProps> =
       <>
         <div className={classNames({
           'items-top flex space-x-2  my-2 px-2 py-2 items-center rounded-sm': true,
-          'bg-[var(--selected)] text-[--selected-color]': isSelected,
+          'bg-(--selected) text-(--selected-color)': isSelected,
         })}>
           <Checkbox className="self-center"
                     id={placeholder.hrid}
@@ -53,7 +53,7 @@ const Placeholder: React.FC<PlaceholderProps> =
               <div className={classNames({
                 'text-xs': true,
                 'text-muted-foreground': !isSelected,
-                'text-[--selected-color]': isSelected
+                'text-(--selected-color)': isSelected
               })}>
                 {placeholder.description}
               </div>

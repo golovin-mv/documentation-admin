@@ -1,12 +1,13 @@
-import { Placeholder } from "@/api/placeholder-api.ts";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { pathToPlaceholder } from "@/lib/utils.ts";
+import { Placeholder } from "@/types";
 
 interface PlaceholdersStore {
   selectedPlaceholders: Placeholder[];
   selectPlaceholder: (placeholder: Placeholder) => void;
   deselectPlaceholder: (placeholder: Placeholder) => void;
+  setSelectedPlaceholders: (placeholders: Placeholder[]) => void;
   filteredPlaceholders: (filter: string) => Placeholder[];
   placeholderForInsert: string;
   insertPlaceholder: (placeholder: Placeholder) => void;
@@ -28,10 +29,16 @@ const usePlaceholdersStore = create<PlaceholdersStore>()(
       deselectPlaceholder: (placeholder: Placeholder) => set((state) => ({
         selectedPlaceholders: state.selectedPlaceholders.filter(p => p.hrid !== placeholder.hrid)
       })),
+      setSelectedPlaceholders: (placeholders: Placeholder[]) => set((state) => {
+        if (JSON.stringify(state.selectedPlaceholders) !== JSON.stringify(placeholders)) {
+          return { selectedPlaceholders: placeholders };
+        }
+        return state;
+      }),
       filteredPlaceholders: (filter: string) => {
         const state = get();
-        return state.selectedPlaceholders.filter(p => 
-          p.hrid.toLowerCase().includes(filter.toLowerCase()) || 
+        return state.selectedPlaceholders.filter(p =>
+          p.hrid.toLowerCase().includes(filter.toLowerCase()) ||
           p.description?.toLowerCase().includes(filter.toLowerCase())
         );
       },
@@ -55,8 +62,8 @@ const usePlaceholdersStore = create<PlaceholdersStore>()(
       parsedContext: '{}',
       enableContext: true,
     }), {
-      name: 'placeholders',
-    }
+    name: 'placeholders',
+  }
   )
 );
 

@@ -17,9 +17,13 @@ const TemplateList: React.FC<TemplateListProps> =
     return (
       <ul {...props}>
         {templates.map(template => (
-          <li key={template.id} className="flex group flex-row items-center hover:bg-[var(--selected)] mb-2 shadow rounded-md px-4 py-2">
+          <li
+            key={template.id}
+            className="flex group flex-row items-center hover:bg-(--selected) mb-2 shadow-sm rounded-md px-4 py-2 cursor-pointer"
+            onDoubleClick={() => onEdit(template)}
+          >
             <div className="grow">
-              <div className="flex gap-2 group-hover:text-[--selected-color]">
+              <div className="flex gap-2 group-hover:text-(--selected-color)">
                 <span>{template.hrid}</span>
                 <Tag
                   style={{
@@ -28,7 +32,7 @@ const TemplateList: React.FC<TemplateListProps> =
                 >v{template.version}</Tag>
               </div>
               <div className="mt-1.5">
-                <span className="text-sm text-muted-foreground group-hover:text-[--selected-color]">{template.description}</span>
+                <span className="text-sm text-muted-foreground group-hover:text-(--selected-color)">{template.description}</span>
                 <Tag
                   style={{
                     backgroundColor: randomColor({ seed: template.contentType.name, luminosity: theme === 'system' ? 'dark' : theme }),
@@ -43,7 +47,7 @@ const TemplateList: React.FC<TemplateListProps> =
               className="h-full"
               onClick={() => onEdit(template)}
             >
-              <EditIcon className="group-hover:text-[--selected-color] group-hover:inline-flex hidden" />
+              <EditIcon className="group-hover:text-(--selected-color) group-hover:inline-flex hidden" />
             </Button>
           </li>
         ))

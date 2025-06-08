@@ -19,7 +19,10 @@ export const templateList = async (): Promise<TemplateListItem[]> => {
   return data;
 }
 
-export const getTemplate = async (id: number): Promise<ApiResponse<ApiTemplate>> => {
+export const getTemplate = async (id?: string): Promise<ApiResponse<ApiTemplate>> => {
+  if (!id) {
+    throw new Error('Template ID is required');
+  }
   const response = await fetch(`${getTemplateAccessUrl()}/api/v1/template/templates/${id}`);
   if (!response.ok) {
     throw new Error(`Failed to fetch template: ${response.statusText}`);
