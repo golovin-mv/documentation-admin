@@ -43,3 +43,32 @@ export async function copyTextToClipboard(text: string) {
     return document.execCommand('copy', true, text);
   }
 }
+
+export function convertToBlade(htmlContent: string, placeholders: Placeholder[]): string {
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = htmlContent;
+
+  const elementsWithBlade = tempDiv.querySelectorAll('[data-blade]');
+
+  elementsWithBlade.forEach(element => {
+    const hrid = element.getAttribute('data-blade');
+
+    if (hrid) {
+      const placeholder = placeholders.find(p => p.hrid === hrid);
+      if (placeholder) {
+        const bladeSyntax = pathToPlaceholder(placeholder);
+
+        const parent = element.parentNode;
+        if (parent) {
+          const textNode = document.createTextNode('');
+          textNode.textContent = bladeSyntax;
+          parent.replaceChild(textNode, element);
+        }
+      }
+    }
+  });
+
+  const result = tempDiv.innerHTML;
+  console.log('Final result:', result);
+  return result;
+}

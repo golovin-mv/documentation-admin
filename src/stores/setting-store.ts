@@ -10,6 +10,8 @@ interface SettingStore {
   setDocumentGeneratorUrl: (url: string) => void,
   templateAccessUrl: string,
   setTemplateAccessUrl: (url: string) => void,
+  fileConverterUrl: string,
+  setFileConverterUrl: (url: string) => void,
   htmlEditorTheme: string,
   jsonEditorTheme: ThemeKeys
 }
@@ -31,36 +33,20 @@ const useSettingStore = create<SettingStore>(
             htmlEditorTheme: 'vs-dark',
             jsonEditorTheme: 'tomorrow'
           });
+      }),
+      documentGeneratorUrl: '',
+      setDocumentGeneratorUrl: (url: string) => set({documentGeneratorUrl: url}),
+      templateAccessUrl: '',
+      setTemplateAccessUrl: (url: string) => set({templateAccessUrl: url}),
+      fileConverterUrl: '',
+      setFileConverterUrl: (url: string) => set({fileConverterUrl: url}),
+      htmlEditorTheme: 'default',
+      jsonEditorTheme: 'bright:inverted'
     }),
-    enableContext
-:
-false,
-  setEnableContext
-:
-(enableContext: boolean) => set({enableContext}),
-  documentGeneratorUrl
-:
-'',
-  setDocumentGeneratorUrl
-:
-(url: string) => set({documentGeneratorUrl: url}),
-  templateAccessUrl
-:
-'',
-  setTemplateAccessUrl
-:
-(url: string) => set({templateAccessUrl: url}),
-  htmlEditorTheme
-:
-'default',
-  jsonEditorTheme
-:
-'bright:inverted'
-}),
-{
-  name: 'setting'
-}
-)
+    {
+      name: 'setting'
+    }
+  )
 )
 
 export default useSettingStore;

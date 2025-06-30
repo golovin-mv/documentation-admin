@@ -3,13 +3,18 @@ import { persist } from "zustand/middleware";
 import { pathToPlaceholder } from "@/lib/utils.ts";
 import { Placeholder } from "@/types";
 
+type PlaceholderForInsert = {
+  code: string,
+  placeholder: Placeholder
+}
+
 interface PlaceholdersStore {
   selectedPlaceholders: Placeholder[];
   selectPlaceholder: (placeholder: Placeholder) => void;
   deselectPlaceholder: (placeholder: Placeholder) => void;
   setSelectedPlaceholders: (placeholders: Placeholder[]) => void;
   filteredPlaceholders: (filter: string) => Placeholder[];
-  placeholderForInsert: string;
+  placeholderForInsert: PlaceholderForInsert | null;
   insertPlaceholder: (placeholder: Placeholder) => void;
   clearInsertPlaceholder: () => void;
   context: string;
@@ -42,12 +47,12 @@ const usePlaceholdersStore = create<PlaceholdersStore>()(
           p.description?.toLowerCase().includes(filter.toLowerCase())
         );
       },
-      placeholderForInsert: '',
+      placeholderForInsert: null,
       insertPlaceholder: (placeholder: Placeholder) => set(() => ({
-        placeholderForInsert: pathToPlaceholder(placeholder)
+        placeholderForInsert: { code: pathToPlaceholder(placeholder), placeholder }
       })),
       clearInsertPlaceholder: () => set(() => ({
-        placeholderForInsert: ''
+        placeholderForInsert: null
       })),
       context: '',
       setEnableContext: (enableContext: boolean) => set(() => ({ enableContext })),

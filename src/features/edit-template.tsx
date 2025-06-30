@@ -7,27 +7,32 @@ import { mapApiResponseToTemplate } from "@/types/template";
 import Spinner from "@/components/ui/spinner";
 import { getTemplate } from "@/api/templates-api";
 import usePlaceholdersStore from "@/stores/placeholders-store";
+import useTemplateStore from "@/stores/template-store";
 
 const EditTemplate: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const { setTemplate, template } = useTemplateStore();
 
-  const { data: template, isLoading, isError, error } = useQuery({
+  const { data: apiTemplate, isLoading, isError, error } = useQuery({
     queryKey: ['template', id],
     queryFn: () => getTemplate(id),
     refetchOnMount: 'always',
   });
 
-  const mappedTemplate = template && mapApiResponseToTemplate(template);
+  const mappedTemplate = apiTemplate && mapApiResponseToTemplate(apiTemplate);
 
   const {
     setSelectedPlaceholders,
   } = usePlaceholdersStore();
 
   useEffect(() => {
-    if (mappedTemplate?.placeholders) {
-      setSelectedPlaceholders(mappedTemplate.placeholders);
+    if (mappedTemplate && (!template || template.id !== mappedTemplate.id)) {
+      setTemplate(mappedTemplate);
+      if (mappedTemplate.placeholders) {
+        setSelectedPlaceholders(mappedTemplate.placeholders);
+      }
     }
-  }, [mappedTemplate?.placeholders]);
+  }, [mappedTemplate, template]);
 
   if (isLoading) {
     return <div><Spinner>Loading</Spinner></div>;
@@ -37,7 +42,7 @@ const EditTemplate: React.FC = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  if (!mappedTemplate && !isLoading) {
+  if (!template && !isLoading) {
     return <div>Template not found</div>;
   }
 
@@ -45,7 +50,7 @@ const EditTemplate: React.FC = () => {
     <div className="flex flex-row overflow-hidden h-screen ">
       <div className="w-3/4">
         <HtmlEditor
-          template={mappedTemplate}
+          template={template}
           onSave={() => { }}
         />
       </div>

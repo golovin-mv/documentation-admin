@@ -1,5 +1,6 @@
 export interface TemplateListItem {
   id: number;
+  name: string,
   hrid: string;
   version: number;
   priority: number;

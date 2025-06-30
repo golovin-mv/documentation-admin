@@ -32,14 +32,16 @@ const TemplateList: React.FC<TemplateListProps> =
                 >v{template.version}</Tag>
               </div>
               <div className="mt-1.5">
-                <span className="text-sm text-muted-foreground group-hover:text-(--selected-color)">{template.description}</span>
+                <span className="text-sm text-muted-foreground group-hover:text-(--selected-color)">{template.name}</span>
                 <Tag
                   style={{
                     backgroundColor: randomColor({ seed: template.contentType.name, luminosity: theme === 'system' ? 'dark' : theme }),
                   }}
                 >{template.contentType.name}</Tag>
-                <span className="text-xs text-muted-foreground">From: {new Date(template.startDate).toLocaleDateString()}</span>
-                <span className="text-xs text-muted-foreground ml-2">To: {new Date(template.endDate).toLocaleDateString()}</span>
+                <div>
+                  <span className="text-xs text-muted-foreground">From: {new Date(template.startDate).toLocaleDateString()}</span>
+                  <span className="text-xs text-muted-foreground ml-2">To: {new Date(template.endDate).toLocaleDateString()}</span>
+                </div>
               </div>
             </div>
             <Button

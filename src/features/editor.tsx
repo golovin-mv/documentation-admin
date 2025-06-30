@@ -10,13 +10,21 @@ import useHtmlStore from '@/stores/html-store.ts';
 import { TemplateForm } from "@/components/template/template-form";
 import { Template } from "@/types/template";
 import VisualEditor from "@/components/editor/visual-editor";
+import useTemplateStore from "@/stores/template-store";
 
 interface HtmlEditorProps {
   template?: Template | null;
   onSave?: (template: Partial<Template>) => void;
 }
 
+const formatDate = (date: Date | string | null | undefined): string => {
+  if (!date) return '';
+  const dateObj = date instanceof Date ? date : new Date(date);
+  return dateObj.toISOString().split('T')[0];
+};
+
 const HtmlEditor: React.FC<HtmlEditorProps> = ({ template, onSave }) => {
+  const { template: storeTemplate } = useTemplateStore();
   const insertContent = (editor: typeof Editor, content: string) => {
     if (!editor) {
       return;
@@ -43,7 +51,7 @@ const HtmlEditor: React.FC<HtmlEditorProps> = ({ template, onSave }) => {
 
   useEffect(() => {
     if (placeholderForInsert) {
-      insertContent(editorRef.current, placeholderForInsert);
+      insertContent(editorRef.current, placeholderForInsert.code);
       clearInsertPlaceholder()
     }
   }, [placeholderForInsert]);
@@ -76,8 +84,8 @@ const HtmlEditor: React.FC<HtmlEditorProps> = ({ template, onSave }) => {
         <TemplateForm
           hrid={template?.hrid ?? ''}
           name={template?.name ?? ''}
-          startDate={template?.startDate?.toISOString().split('T')[0] ?? ''}
-          endDate={template?.endDate?.toISOString().split('T')[0] ?? ''}
+          startDate={formatDate(template?.startDate)}
+          endDate={formatDate(template?.endDate)}
           priority={template?.priority ?? 0}
           description={template?.description ?? ''}
           onSave={handleTemplateSave}
@@ -85,7 +93,7 @@ const HtmlEditor: React.FC<HtmlEditorProps> = ({ template, onSave }) => {
       </TabsContent>
       <TabsContent value="visual" className="h-full w-full px-6">
         <VisualEditor
-          content={template?.htmlContent ?? ''}
+          content={storeTemplate?.htmlContent ?? ''}
           onChange={() => { }}
         />
       </TabsContent>

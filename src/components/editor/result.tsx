@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { testTemplate } from "@/api/placeholder-api.ts";
 import useHtmlStore from "@/stores/html-store.ts";
@@ -7,10 +7,12 @@ import { Input } from "@/components/ui/input.tsx";
 import Preview from "@/components/editor/preview.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
-import { ListRestartIcon } from "lucide-react";
+import { Eye, FileCheck } from "lucide-react";
 import Spinner from "../ui/spinner";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 const Result: React.FC = () => {
+  const [convertToPDF, setConvertToPDF] = useState(false);
   const { code, idForTest, setIdForTest, } = useHtmlStore();
   const selectedPlaceholders = usePlaceholdersStore(
     ({ selectedPlaceholders }) => selectedPlaceholders.map(el => el.path)
@@ -23,8 +25,14 @@ const Result: React.FC = () => {
   );
 
   const { data, isLoading, isError, error, refetch } = useQuery({
-    queryKey: ['result', idForTest, code.length, parsedContext],
-    queryFn: () => testTemplate({ id: idForTest, template: code, placeholders: selectedPlaceholders, context: JSON.parse(parsedContext) }),
+    queryKey: ['result', idForTest, code.length, parsedContext, convertToPDF],
+    queryFn: () => testTemplate({
+      id: idForTest,
+      template: code,
+      placeholders: selectedPlaceholders,
+      context: JSON.parse(parsedContext),
+      convertToPDF
+    }),
     enabled: false,
     retry: false
   });
@@ -43,15 +51,45 @@ const Result: React.FC = () => {
           onChange={(e) => setIdForTest(e.target.value)}
           disabled={isLoading}
         />
-        <Button
-          className="mt-1"
-          onClick={() => refetch()}
-          variant="outline"
-          size="icon"
-          disabled={isLoading}
-        >
-          <ListRestartIcon />
-        </Button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              className="mt-1"
+              onClick={() => {
+                setConvertToPDF(false);
+                refetch();
+              }}
+              variant="outline"
+              size="icon"
+              disabled={isLoading}
+            >
+              <Eye />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Show HTML preview</p>
+          </TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              className="mt-1"
+              onClick={() => {
+                setConvertToPDF(true);
+                refetch();
+              }}
+              variant="outline"
+              size="icon"
+              disabled={isLoading}
+            >
+              <FileCheck />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Download PDF</p>
+          </TooltipContent>
+        </Tooltip>
       </div>
       {data &&
         <ScrollArea className="mt-2">

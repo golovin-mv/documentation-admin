@@ -26,6 +26,8 @@ const TopNavigation: React.FC = () => (
                     List
                   </NavigationMenuLink>
                 </Link>
+              </li>
+              <li>
                 <Link to="/create-template">
                   <NavigationMenuLink className={navigationMenuTriggerStyle()} >
                     <FilePlus2 className="w-5 h-5 mr-2" />

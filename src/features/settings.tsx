@@ -13,6 +13,8 @@ const Settings: React.FC = () => {
     setDocumentGeneratorUrl,
     templateAccessUrl,
     setTemplateAccessUrl,
+    fileConverterUrl,
+    setFileConverterUrl,
   } = useSettingStore();
 
   const { setTheme: setThemeContext } = useContext(ThemeProviderContext)
@@ -54,6 +56,16 @@ const Settings: React.FC = () => {
                 name="dta"
                 value={templateAccessUrl}
                 onChange={e => setTemplateAccessUrl(e.target.value)}
+                className="mt-1 p-2 border border-gray-300 rounded w-full"
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="field3" className="block">File Converter URL</label>
+              <Input
+                type="url"
+                name="fc"
+                value={fileConverterUrl}
+                onChange={e => setFileConverterUrl(e.target.value)}
                 className="mt-1 p-2 border border-gray-300 rounded w-full"
               />
             </div>
