@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import useSettingStore from '@/stores/setting-store';
 import { Input } from '@/components/ui/input';
@@ -28,6 +28,8 @@ const VisualEditor: React.FC<VisualEditorProps> = ({
   height = 'calc(100vh - 64px)',
   onChange,
 }) => {
+
+  const [saved, setSaved] = useState<boolean>(true);
   const { theme } = useSettingStore();
   const { setTemplate, template } = useTemplateStore();
 
@@ -43,6 +45,7 @@ const VisualEditor: React.FC<VisualEditorProps> = ({
     if (placeholderForInsert) {
       onPlaceholderSelect(editorRef, placeholderForInsert.placeholder);
       clearInsertPlaceholder()
+      setSaved(false);
     }
   }, [placeholderForInsert]);
 
@@ -68,6 +71,7 @@ const VisualEditor: React.FC<VisualEditorProps> = ({
       console.log('HTML Content:', html.replace(/&gt;/g, '>'));
       const bladeContent = convertToBlade(html.replace(/&gt;/g, '>'), selectedPlaceholders);
       setTemplate({ ...template, content: bladeContent });
+      setSaved(true);
     }
   };
 
@@ -80,7 +84,11 @@ const VisualEditor: React.FC<VisualEditorProps> = ({
           onChange={handleFileChange}
           className="w-full"
         />
-        <Button onClick={handleSave} variant={'destructive'}>
+        <Button
+          onClick={handleSave}
+          variant={'destructive'}
+          disabled={saved}
+        >
           Save
         </Button>
       </div>
@@ -95,20 +103,21 @@ const VisualEditor: React.FC<VisualEditorProps> = ({
           if (template) {
             setTemplate({ ...template, htmlContent: content });
           }
+          setSaved(false);
         }}
         init={{
+          language: 'ru',
           height,
           menubar: true,
           plugins: [
             'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-            'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            'searchreplace', 'visualblocks', 'code', 'fullscreen',
+            'insertdatetime', 'media', 'table', 'help', 'wordcount', 'advlist'
           ],
           toolbar: 'undo redo | blocks | ' +
             'bold italic forecolor | alignleft aligncenter ' +
             'alignright alignjustify | bullist numlist outdent indent | ' +
             'removeformat | help',
-          content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
           skin: theme === 'dark' ? 'oxide-dark' : 'oxide',
           content_css: theme === 'dark' ? 'dark' : 'default',
         }}
