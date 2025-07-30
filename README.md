@@ -1,30 +1,65 @@
-# React + TypeScript + Vite
+# Система Управления Шаблонами Документов
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Это веб-приложение представляет собой панель администратора для управления шаблонами документов. Оно позволяет создавать, редактировать и просматривать шаблоны, используя визуальный редактор (WYSIWYG) и редактор кода.
 
-Currently, two official plugins are available:
+## Ключевые возможности
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   **Управление шаблонами:** Создание, просмотр, обновление и удаление шаблонов.
+-   **Редактирование:** Встроенный визуальный редактор TinyMCE и редактор кода Monaco для гибкой работы с HTML-шаблонами.
+-   **Работа с плейсхолдерами:** Управление списком плейсхолдеров (переменных), которые можно вставлять в шаблоны.
+-   **Контекст:** Возможность задавать контекст в формате JSON для предпросмотра шаблонов с реальными данными.
+-   **Предпросмотр:** Просмотр сгенерированного HTML на основе шаблона и контекста.
+-   **Интернационализация:** Поддержка русского и английского языков.
+-   **Адаптивный дизайн:** Пользовательский интерфейс, адаптированный для различных устройств.
 
-## Expanding the ESLint configuration
+## Технологии
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+-   **Фреймворк:** React
+-   **Сборщик:** Vite
+-   **Язык:** TypeScript
+-   **Стилизация:** Tailwind CSS с использованием `shadcn/ui` компонентов.
+-   **Управление состоянием:** Zustand
+-   **Формы:** React Hook Form с валидацией через Zod.
+-   **Интернационализация:** i18next
+-   **Редакторы:**
+    -   TinyMCE (визуальный редактор)
+    -   Monaco Editor (редактор кода)
+-   **Маршрутизация:** React Router
 
-- Configure the top-level `parserOptions` property like this:
+## Начало работы
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+### Требования
+
+-   Node.js (версия 18.x или выше)
+-   npm (или yarn/pnpm)
+
+### Установка
+
+1.  Клонируйте репозиторий:
+    ```bash
+    git clone <URL репозитория>
+    cd admin
+    ```
+
+2.  Установите зависимости:
+    ```bash
+    npm install
+    ```
+
+### Запуск
+
+Для запуска приложения в режиме разработки выполните:
+
+```bash
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Приложение будет доступно по адресу `http://localhost:5173` (или другому порту, если 5173 занят).
+
+## Доступные скрипты
+
+-   `npm run dev`: Запуск сервера для разработки.
+-   `npm run build`: Сборка приложения для продакшена.
+-   `npm run lint`: Проверка кода с помощью ESLint.
+-   `npm run preview`: Локальный запуск продакшн-сборки.
+-   `npm run serve`: Запуск статического сервера для раздачи собранного приложения.
