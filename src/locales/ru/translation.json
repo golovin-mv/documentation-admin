@@ -1,0 +1,23 @@
+{
+  "topMenu": {
+    "templates": "Шаблоны",
+    "list": "Список",
+    "new": "Новый",
+    "settings": "Настройки"
+  },
+  "editor": {
+    "template": "Шаблон",
+    "visualEditor": "Визуальный редактор",
+    "codeEditor": "Редактор кода",
+    "rawPreview": "Предпросмотр",
+    "generate": "Сгенерировать"
+  },
+  "settings": {
+    "title": "Настройки",
+    "docGenUrl": "URL генератора документов",
+    "templateAccessUrl": "URL доступа к шаблонам документов",
+    "fileConverterUrl": "URL конвертера файлов",
+    "darkMode": "Темная тема",
+    "language": "Язык"
+  }
+}

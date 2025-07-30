@@ -10,8 +10,8 @@ import EditTemplate from "./features/edit-template";
 const queryClient = new QueryClient()
 
 function App() {
-
   return (
+
     <ThemeProvider storageKey="vite-ui-theme">
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>

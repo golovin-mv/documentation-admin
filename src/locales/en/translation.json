@@ -1,0 +1,23 @@
+{
+  "topMenu": {
+    "templates": "Templates",
+    "list": "List",
+    "new": "New",
+    "settings": "Settings"
+  },
+  "editor": {
+    "template": "Template",
+    "visualEditor": "Visual Editor",
+    "codeEditor": "Code Editor",
+    "rawPreview": "Raw Preview",
+    "generate": "Generate"
+  },
+  "settings": {
+    "title": "Settings",
+    "docGenUrl": "Document Generator URL",
+    "templateAccessUrl": "Document Template Access URL",
+    "fileConverterUrl": "File Converter URL",
+    "darkMode": "Dark Mode",
+    "language": "Language"
+  }
+}

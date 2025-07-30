@@ -11,6 +11,7 @@ import { TemplateForm } from "@/components/template/template-form";
 import { Template } from "@/types/template";
 import VisualEditor from "@/components/editor/visual-editor";
 import useTemplateStore from "@/stores/template-store";
+import { useTranslation } from "react-i18next";
 
 interface HtmlEditorProps {
   template?: Template | null;
@@ -24,6 +25,7 @@ const formatDate = (date: Date | string | null | undefined): string => {
 };
 
 const HtmlEditor: React.FC<HtmlEditorProps> = ({ template, onSave }) => {
+  const { t } = useTranslation();
   const { template: storeTemplate } = useTemplateStore();
   const insertContent = (editor: typeof Editor, content: string) => {
     if (!editor) {
@@ -74,11 +76,11 @@ const HtmlEditor: React.FC<HtmlEditorProps> = ({ template, onSave }) => {
   return (
     <Tabs defaultValue="template" className="overflow-hidden h-full flex flex-col items-center">
       <TabsList className="mt-2">
-        <TabsTrigger value="template">Template</TabsTrigger>
-        <TabsTrigger value="visual">Visual Editor</TabsTrigger>
-        <TabsTrigger value="editor">Code Editor</TabsTrigger>
-        <TabsTrigger value="preview">Raw Preview</TabsTrigger>
-        <TabsTrigger value="result">Generate</TabsTrigger>
+        <TabsTrigger value="template">{t('editor.template')}</TabsTrigger>
+        <TabsTrigger value="visual">{t('editor.visualEditor')}</TabsTrigger>
+        <TabsTrigger value="editor">{t('editor.codeEditor')}</TabsTrigger>
+        <TabsTrigger value="preview">{t('editor.rawPreview')}</TabsTrigger>
+        <TabsTrigger value="result">{t('editor.generate')}</TabsTrigger>
       </TabsList>
       <TabsContent value="template" className="h-full w-full px-6">
         <TemplateForm

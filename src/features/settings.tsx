@@ -1,11 +1,14 @@
 import React, { useContext } from "react";
-import useSettingStore from "@/stores/setting-store.ts";
+import useSettingStore, { availableLanguages } from "@/stores/setting-store.ts";
 import { Switch } from "@/components/ui/switch.tsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { ThemeProviderContext } from "@/components/theme-provider.tsx";
+import { useTranslation } from "react-i18next";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const Settings: React.FC = () => {
+  const { t } = useTranslation();
   const {
     theme,
     setTheme,
@@ -15,6 +18,8 @@ const Settings: React.FC = () => {
     setTemplateAccessUrl,
     fileConverterUrl,
     setFileConverterUrl,
+    language,
+    setLanguage
   } = useSettingStore();
 
   const { setTheme: setThemeContext } = useContext(ThemeProviderContext)
@@ -31,16 +36,23 @@ const Settings: React.FC = () => {
       })()
   }
 
+  const handleLanguageChange = (langKey: string) => {
+    const selectedLanguage = availableLanguages.find(lang => lang.key === langKey);
+    if (selectedLanguage) {
+      setLanguage(selectedLanguage);
+    }
+  }
+
   return (
     <section className="h-full flex flex-col items-center justify-center">
       <Card className="w-1/2">
         <CardHeader>
-          <CardTitle>Settings</CardTitle>
+          <CardTitle>{t('settings.title')}</CardTitle>
         </CardHeader>
         <CardContent>
           <section className="max-w-md mx-auto p-4">
             <div className="mb-4">
-              <label htmlFor="field1" className="block">Document Generator URL</label>
+              <label htmlFor="field1" className="block">{t('settings.docGenUrl')}</label>
               <Input
                 type="url"
                 name="dge"
@@ -50,7 +62,7 @@ const Settings: React.FC = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="field2" className="block">Document Template Access URL</label>
+              <label htmlFor="field2" className="block">{t('settings.templateAccessUrl')}</label>
               <Input
                 type="url"
                 name="dta"
@@ -60,7 +72,7 @@ const Settings: React.FC = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="field3" className="block">File Converter URL</label>
+              <label htmlFor="field3" className="block">{t('settings.fileConverterUrl')}</label>
               <Input
                 type="url"
                 name="fc"
@@ -68,6 +80,21 @@ const Settings: React.FC = () => {
                 onChange={e => setFileConverterUrl(e.target.value)}
                 className="mt-1 p-2 border border-gray-300 rounded w-full"
               />
+            </div>
+            <div className="mb-4">
+              <label className="block mb-2">{t('settings.language')}</label>
+              <Select onValueChange={(value) => handleLanguageChange(value)}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder={language.name} />
+                </SelectTrigger>
+                <SelectContent>
+                  {availableLanguages.map((lang) => (
+                    <SelectItem value={lang.key}>
+                      {lang.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div className="mb-4 flex items-center">
               <Switch
@@ -77,7 +104,7 @@ const Settings: React.FC = () => {
                 onCheckedChange={handleSwitchChange}
                 className="mr-2"
               />
-              <label htmlFor="switch" className="text-gray-700">Dark Mode</label>
+              <label htmlFor="switch" className="text-gray-700">{t('settings.darkMode')}</label>
             </div>
           </section>
         </CardContent>

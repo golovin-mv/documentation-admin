@@ -29,8 +29,7 @@ const VisualEditor: React.FC<VisualEditorProps> = ({
   onChange,
 }) => {
 
-  const [saved, setSaved] = useState<boolean>(true);
-  const { theme } = useSettingStore();
+  const { theme, language } = useSettingStore();
   const { setTemplate, template } = useTemplateStore();
 
   const editorRef = useRef<any>(null);
@@ -45,7 +44,6 @@ const VisualEditor: React.FC<VisualEditorProps> = ({
     if (placeholderForInsert) {
       onPlaceholderSelect(editorRef, placeholderForInsert.placeholder);
       clearInsertPlaceholder()
-      setSaved(false);
     }
   }, [placeholderForInsert]);
 
@@ -71,7 +69,6 @@ const VisualEditor: React.FC<VisualEditorProps> = ({
       console.log('HTML Content:', html.replace(/&gt;/g, '>'));
       const bladeContent = convertToBlade(html.replace(/&gt;/g, '>'), selectedPlaceholders);
       setTemplate({ ...template, content: bladeContent });
-      setSaved(true);
     }
   };
 
@@ -87,7 +84,6 @@ const VisualEditor: React.FC<VisualEditorProps> = ({
         <Button
           onClick={handleSave}
           variant={'destructive'}
-          disabled={saved}
         >
           Save
         </Button>
@@ -103,10 +99,10 @@ const VisualEditor: React.FC<VisualEditorProps> = ({
           if (template) {
             setTemplate({ ...template, htmlContent: content });
           }
-          setSaved(false);
         }}
         init={{
-          language: 'ru',
+          language: language.key,
+          language_url: '/ru.js',
           height,
           menubar: true,
           plugins: [
