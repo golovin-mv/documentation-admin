@@ -4,10 +4,12 @@ import ReactJsonView from '@microlink/react-json-view';
 import { Checkbox } from "@/components/ui/checkbox.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import useSettingStore from "@/stores/setting-store.ts";
+import { useTranslation } from "react-i18next";
 
 const ContextEditor: React.FC = () => {
   const { setContext, parsedContext, enableContext, setEnableContext } = usePlaceholdersStore();
   const { jsonEditorTheme } = useSettingStore();
+  const { t } = useTranslation();
 
   return (
     <div className="w-full px-2">
@@ -21,7 +23,7 @@ const ContextEditor: React.FC = () => {
           htmlFor="context"
           className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
-          Enable context
+          {t('contextEditor.enableContext')}
         </label>
       </div>
       <div>
@@ -49,7 +51,7 @@ const ContextEditor: React.FC = () => {
               className="w-full mt-4"
               variant="destructive"
               onClick={() => setContext('{}')}
-            >Clear context</Button>
+            >{t('contextEditor.clearContext')}</Button>
           </>
         }
       </div>

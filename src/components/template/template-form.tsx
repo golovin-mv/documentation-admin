@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { Template } from "@/types/template"
+import { useTranslation } from "react-i18next";
 
 type TemplateFormProps = {
   hrid: string;
@@ -23,16 +24,18 @@ type TemplateFormProps = {
   onSave?: (data: Partial<Template>) => void;
 }
 
-const formSchema = z.object({
-  hrid: z.string().min(1, "HRID is required"),
-  name: z.string().min(1, "Name is required"),
-  startDate: z.string().min(1, "Start date is required"),
-  endDate: z.string().min(1, "End date is required"),
-  priority: z.number().min(0, "Priority must be a positive number"),
-  description: z.string(),
-})
-
 export function TemplateForm(props: TemplateFormProps) {
+  const { t } = useTranslation();
+
+  const formSchema = z.object({
+    hrid: z.string().min(1, t('templateForm.hridRequired')),
+    name: z.string().min(1, t('templateForm.nameRequired')),
+    startDate: z.string().min(1, t('templateForm.startDateRequired')),
+    endDate: z.string().min(1, t('templateForm.endDateRequired')),
+    priority: z.number().min(0, t('templateForm.priorityPositive')),
+    description: z.string(),
+  })
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -63,9 +66,9 @@ export function TemplateForm(props: TemplateFormProps) {
           name="hrid"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>HRID</FormLabel>
+              <FormLabel>{t('templateForm.hrid')}</FormLabel>
               <FormControl>
-                <Input placeholder="Enter HRID" {...field} />
+                <Input placeholder={t('templateForm.hridPlaceholder')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -76,9 +79,9 @@ export function TemplateForm(props: TemplateFormProps) {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>{t('templateForm.name')}</FormLabel>
               <FormControl>
-                <Input placeholder="Enter name" {...field} />
+                <Input placeholder={t('templateForm.namePlaceholder')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -89,7 +92,7 @@ export function TemplateForm(props: TemplateFormProps) {
           name="startDate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Start Date</FormLabel>
+              <FormLabel>{t('templateForm.startDate')}</FormLabel>
               <FormControl>
                 <Input type="date" {...field} />
               </FormControl>
@@ -102,7 +105,7 @@ export function TemplateForm(props: TemplateFormProps) {
           name="endDate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>End Date</FormLabel>
+              <FormLabel>{t('templateForm.endDate')}</FormLabel>
               <FormControl>
                 <Input type="date" {...field} />
               </FormControl>
@@ -115,11 +118,11 @@ export function TemplateForm(props: TemplateFormProps) {
           name="priority"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Priority</FormLabel>
+              <FormLabel>{t('templateForm.priority')}</FormLabel>
               <FormControl>
-                <Input 
-                  type="number" 
-                  {...field} 
+                <Input
+                  type="number"
+                  {...field}
                   onChange={e => field.onChange(Number(e.target.value))}
                 />
               </FormControl>
@@ -132,17 +135,18 @@ export function TemplateForm(props: TemplateFormProps) {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel>{t('templateForm.description')}</FormLabel>
               <FormControl>
-                <Input placeholder="Enter description" {...field} />
+                <Input placeholder={t('templateForm.descriptionPlaceholder')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Save Template</Button>
+        <div className="flex justify-end">
+          <Button type="submit">{t('templateForm.save')}</Button>
+        </div>
       </form>
     </Form>
   )
 }
-

@@ -10,8 +10,10 @@ import { Button } from "@/components/ui/button.tsx";
 import { BanIcon, CopyIcon, ListChecksIcon, MenuIcon } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, } from "@/components/ui/dropdown-menu"
 import { Separator } from "../ui/separator";
+import {useTranslation} from "react-i18next";
 
 const PlaceholderList: React.FC = () => {
+  const { t } = useTranslation();
   const { data: placeholders, isLoading, isError } = useQuery({
     queryKey: ['placeholders'],
     queryFn: getAllPlaceholders,
@@ -69,7 +71,7 @@ const PlaceholderList: React.FC = () => {
         <Input
           className="mt-1"
           type="email"
-          placeholder="Filter"
+          placeholder={t('placeholders.filter')}
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
         />
@@ -82,22 +84,22 @@ const PlaceholderList: React.FC = () => {
           <DropdownMenuContent>
             <DropdownMenuItem onClick={() => handleCopyClick()}>
               <CopyIcon className="pr-2" />
-              Copy
+              {t('placeholders.copy')}
             </DropdownMenuItem>
             <Separator />
             <DropdownMenuItem onClick={() => handleSelectClick(true)}>
               <ListChecksIcon className="pr-2" />
-              Select All
+              {t('placeholders.selectAll')}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => handleSelectClick(false)}>
               <BanIcon className="pr-2" />
-              Deselect All
+              {t('placeholders.deselectAll')}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
       <ScrollArea className="flex flex-col max-h-[90vh] p-3">
-        {isLoading && <div>Loading...</div>}
+        {isLoading && <div>{t('placeholders.loading')}</div>}
         {placeholders && filterPlaceholders(placeholders)?.map((placeholder: PlaceholderType) => (
           <Placeholder
             key={placeholder.id}
@@ -108,7 +110,7 @@ const PlaceholderList: React.FC = () => {
             onInsert={insertPlaceholder}
           />
         ))}
-        {isError && <div>Error</div>}
+        {isError && <div>{t('placeholders.error')}</div>}
       </ScrollArea>
     </div>
   )

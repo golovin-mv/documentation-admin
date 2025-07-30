@@ -18,6 +18,45 @@
     "templateAccessUrl": "URL доступа к шаблонам документов",
     "fileConverterUrl": "URL конвертера файлов",
     "darkMode": "Темная тема",
-    "language": "Язык"
+    "language": "Язык",
+    "save": "Сохранить",
+    "reset": "Сбросить",
+    "savedMessage": "Настройки сохранены!"
+  },
+  "templates": {
+    "searchPlaceholder": "Поиск по названию, hrid или описанию..."
+  },
+  "context": {
+    "placeholders": "Переменные",
+    "context": "Контекст"
+  },
+  "placeholders": {
+    "filter": "Фильтр",
+    "copy": "Копировать",
+    "selectAll": "Выбрать все",
+    "deselectAll": "Снять выделение",
+    "loading": "Загрузка...",
+    "error": "Ошибка"
+  },
+  "templateForm": {
+    "hrid": "HRID",
+    "hridPlaceholder": "Введите HRID",
+    "name": "Название",
+    "namePlaceholder": "Введите название",
+    "startDate": "Дата начала",
+    "endDate": "Дата окончания",
+    "priority": "Приоритет",
+    "description": "Описание",
+    "descriptionPlaceholder": "Введите описание",
+    "save": "Сохранить шаблон",
+    "hridRequired": "HRID обязателен",
+    "nameRequired": "Название обязательно",
+    "startDateRequired": "Дата начала обязательна",
+    "endDateRequired": "Дата окончания обязательна",
+    "priorityPositive": "Приоритет должен быть положительным числом"
+  },
+  "contextEditor": {
+    "enableContext": "Включить контекст",
+    "clearContext": "Очистить контекст"
   }
 }

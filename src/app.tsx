@@ -4,8 +4,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Settings from "@/features/settings.tsx";
 import Templates from "@/features/templates.tsx";
 import CreateTemplate from "@/features/create-template.tsx";
-import TopNavigation from "@/components/top-menu.tsx";
 import EditTemplate from "./features/edit-template";
+import SideNav from "./components/side-nav";
+import { SidebarProvider, SidebarTrigger } from "./components/ui/sidebar";
 
 const queryClient = new QueryClient()
 
@@ -15,13 +16,18 @@ function App() {
     <ThemeProvider storageKey="vite-ui-theme">
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          <TopNavigation />
-          <Routes>
-            <Route path="settings" element={<Settings />} />
-            <Route path="templates" element={<Templates />} />
-            <Route path="create" element={<CreateTemplate />} />
-            <Route path="edit/:id" element={<EditTemplate />} />
-          </Routes>
+          <SidebarProvider>
+            <SideNav />
+            <main className="w-full">
+              <SidebarTrigger className="fixed" />
+              <Routes>
+                <Route path="settings" element={<Settings />} />
+                <Route path="templates" element={<Templates />} />
+                <Route path="create" element={<CreateTemplate />} />
+                <Route path="edit/:id" element={<EditTemplate />} />
+              </Routes>
+            </main>
+          </SidebarProvider>
         </BrowserRouter>
       </QueryClientProvider>
     </ThemeProvider>

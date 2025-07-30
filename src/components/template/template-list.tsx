@@ -24,7 +24,7 @@ const TemplateList: React.FC<TemplateListProps> =
           >
             <div className="grow">
               <div className="flex gap-2 group-hover:text-(--selected-color)">
-                <span>{template.hrid}</span>
+                <span>{template.name}</span>
                 <Tag
                   style={{
                     backgroundColor: randomColor({ seed: 'version', luminosity: theme === 'system' ? 'dark' : theme }),
@@ -32,7 +32,7 @@ const TemplateList: React.FC<TemplateListProps> =
                 >v{template.version}</Tag>
               </div>
               <div className="mt-1.5">
-                <span className="text-sm text-muted-foreground group-hover:text-(--selected-color)">{template.name}</span>
+                <span className="text-sm text-muted-foreground group-hover:text-(--selected-color)">{template.hrid}</span>
                 <Tag
                   style={{
                     backgroundColor: randomColor({ seed: template.contentType.name, luminosity: theme === 'system' ? 'dark' : theme }),

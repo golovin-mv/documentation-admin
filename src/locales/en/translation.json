@@ -18,6 +18,45 @@
     "templateAccessUrl": "Document Template Access URL",
     "fileConverterUrl": "File Converter URL",
     "darkMode": "Dark Mode",
-    "language": "Language"
+    "language": "Language",
+    "save": "Save",
+    "reset": "Reset",
+    "savedMessage": "Settings saved!"
+  },
+  "templates": {
+    "searchPlaceholder": "Search by name, hrid, or description..."
+  },
+  "context": {
+    "placeholders": "Placeholders",
+    "context": "Context"
+  },
+  "placeholders": {
+    "filter": "Filter",
+    "copy": "Copy",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All",
+    "loading": "Loading...",
+    "error": "Error"
+  },
+  "templateForm": {
+    "hrid": "HRID",
+    "hridPlaceholder": "Enter HRID",
+    "name": "Name",
+    "namePlaceholder": "Enter name",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "priority": "Priority",
+    "description": "Description",
+    "descriptionPlaceholder": "Enter description",
+    "save": "Save Template",
+    "hridRequired": "HRID is required",
+    "nameRequired": "Name is required",
+    "startDateRequired": "Start date is required",
+    "endDateRequired": "End date is required",
+    "priorityPositive": "Priority must be a positive number"
+  },
+  "contextEditor": {
+    "enableContext": "Enable context",
+    "clearContext": "Clear context"
   }
 }
