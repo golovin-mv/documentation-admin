@@ -10,7 +10,8 @@
     "visualEditor": "Visual Editor",
     "codeEditor": "Code Editor",
     "rawPreview": "Raw Preview",
-    "generate": "Generate"
+    "generate": "Generate",
+    "save": "Save"
   },
   "settings": {
     "title": "Settings",
@@ -58,5 +59,37 @@
   "contextEditor": {
     "enableContext": "Enable context",
     "clearContext": "Clear context"
+  },
+  "templateCard": {
+    "id": "ID",
+    "hrid": "HRID",
+    "currentVersion": "Current Version",
+    "priority": "Priority",
+    "contentType": "Content Type",
+    "contentTypeHrid": "Content Type HRID",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "viewDetails": "View Details"
+  },
+  "templateView": {
+    "title": "Template Details",
+    "subtitle": "View and manage template information",
+    "notFound": "Template Not Found",
+    "notFoundMessage": "The requested template could not be found.",
+    "invalidId": "Invalid Template ID",
+    "invalidIdMessage": "No template ID provided in the URL.",
+    "retry": "Retry"
+  },
+  "toasts": {
+    "templateLoadError": "Failed to load template",
+    "templateLoadErrorDescription": "Could not fetch template data from the server"
+  },
+  "placeholder": {
+    "insert": "Insert",
+    "info": "Info",
+    "description": "Description",
+    "hrid": "HRID",
+    "path": "Path",
+    "placeholder": "Placeholder"
   }
 }

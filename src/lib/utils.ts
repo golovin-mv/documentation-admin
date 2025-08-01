@@ -69,6 +69,5 @@ export function convertToBlade(htmlContent: string, placeholders: Placeholder[])
   });
 
   const result = tempDiv.innerHTML;
-  console.log('Final result:', result);
   return result;
 }

@@ -10,7 +10,8 @@
     "visualEditor": "Визуальный редактор",
     "codeEditor": "Редактор кода",
     "rawPreview": "Предпросмотр",
-    "generate": "Сгенерировать"
+    "generate": "Сгенерировать",
+    "save": "Сохранить"
   },
   "settings": {
     "title": "Настройки",
@@ -58,5 +59,37 @@
   "contextEditor": {
     "enableContext": "Включить контекст",
     "clearContext": "Очистить контекст"
+  },
+  "templateCard": {
+    "id": "ID",
+    "hrid": "HRID",
+    "currentVersion": "Текущая версия",
+    "priority": "Приоритет",
+    "contentType": "Тип контента",
+    "contentTypeHrid": "HRID типа контента",
+    "startDate": "Дата начала",
+    "endDate": "Дата окончания",
+    "viewDetails": "Подробнее"
+  },
+  "templateView": {
+    "title": "Детали шаблона",
+    "subtitle": "Просмотр и управление информацией о шаблоне",
+    "notFound": "Шаблон не найден",
+    "notFoundMessage": "Запрашиваемый шаблон не найден.",
+    "invalidId": "Неверный ID шаблона",
+    "invalidIdMessage": "ID шаблона не указан в URL.",
+    "retry": "Повторить"
+  },
+  "toasts": {
+    "templateLoadError": "Не удалось загрузить шаблон",
+    "templateLoadErrorDescription": "Не удалось получить данные шаблона с сервера"
+  },
+  "placeholder": {
+    "insert": "Вставить",
+    "info": "Информация",
+    "description": "Описание",
+    "hrid": "HRID",
+    "path": "Путь",
+    "placeholder": "Переменная"
   }
 }

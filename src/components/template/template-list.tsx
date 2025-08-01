@@ -9,10 +9,11 @@ import { EditIcon } from "lucide-react";
 interface TemplateListProps extends HTMLAttributes<HTMLUListElement> {
   templates: TemplateListItem[],
   onEdit: (template: TemplateListItem) => void,
+  onView?: (template: TemplateListItem) => void,
 }
 
 const TemplateList: React.FC<TemplateListProps> =
-  ({ templates, onEdit, ...props }) => {
+  ({ templates, onEdit, onView, ...props }) => {
     const { theme } = useTheme();
     return (
       <ul {...props}>
@@ -20,7 +21,7 @@ const TemplateList: React.FC<TemplateListProps> =
           <li
             key={template.id}
             className="flex group flex-row items-center hover:bg-(--selected) mb-2 shadow-sm rounded-md px-4 py-2 cursor-pointer"
-            onDoubleClick={() => onEdit(template)}
+            onDoubleClick={() => onView ? onView(template) : onEdit(template)}
           >
             <div className="grow">
               <div className="flex gap-2 group-hover:text-(--selected-color)">

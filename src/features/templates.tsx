@@ -56,6 +56,7 @@ const Templates: React.FC = () => {
             <TemplateList
               templates={filteredTemplates}
               onEdit={(template: TemplateListItem) => navigate(`/edit/${template.id}`)}
+              onView={(template: TemplateListItem) => navigate(`/view/${template.id}`)}
             />
           </ScrollArea>
         </>

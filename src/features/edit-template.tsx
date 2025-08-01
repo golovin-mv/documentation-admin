@@ -8,6 +8,7 @@ import Spinner from "@/components/ui/spinner";
 import { getTemplate } from "@/api/templates-api";
 import usePlaceholdersStore from "@/stores/placeholders-store";
 import useTemplateStore from "@/stores/template-store";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 
 const EditTemplate: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -48,17 +49,27 @@ const EditTemplate: React.FC = () => {
 
   return (
     <div className="flex flex-row overflow-hidden h-screen ">
-      <div className="w-3/4">
-        <HtmlEditor
-          template={template}
-          onSave={() => { }}
-        />
-      </div>
-      <div style={{
-        backgroundColor: 'hsl(var(--secondary))'
-      }} className="w-1/4 h-full overflow-hidden border-solid px-2 ">
-        <Context />
-      </div>
+      <ResizablePanelGroup direction="horizontal">
+        <ResizablePanel defaultSize={75} minSize={50}>
+          <div className="w-full h-full">
+            <HtmlEditor
+              template={template}
+              onSave={() => { }}
+            />
+          </div>
+        </ResizablePanel>
+        <ResizableHandle withHandle />
+        <ResizablePanel
+          collapsible={true}
+          minSize={10}
+        >
+          <div style={{
+            backgroundColor: 'hsl(var(--secondary))'
+          }}>
+            <Context />
+          </div>
+        </ResizablePanel>
+      </ResizablePanelGroup>
     </div>
   )
 }
