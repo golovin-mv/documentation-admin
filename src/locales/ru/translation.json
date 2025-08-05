@@ -17,7 +17,6 @@
     "title": "Настройки",
     "docGenUrl": "URL генератора документов",
     "templateAccessUrl": "URL доступа к шаблонам документов",
-    "fileConverterUrl": "URL конвертера файлов",
     "darkMode": "Темная тема",
     "language": "Язык",
     "save": "Сохранить",

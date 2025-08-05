@@ -82,16 +82,6 @@ const Settings: React.FC = () => {
               />
             </div>
             <div>
-              <label htmlFor="fileConverterUrl" className="block mb-1">{t('settings.fileConverterUrl')}</label>
-              <Input
-                id="fileConverterUrl"
-                type="url"
-                value={draft.fileConverterUrl}
-                onChange={e => setDraft(prev => ({ ...prev, fileConverterUrl: e.target.value }))}
-                className="mt-1 p-2 border border-gray-300 rounded w-full"
-              />
-            </div>
-            <div>
               <label htmlFor="language-select" className="block mb-2">{t('settings.language')}</label>
               <Select value={draft.language.key} onValueChange={handleLanguageChange}>
                 <SelectTrigger id="language-select">
